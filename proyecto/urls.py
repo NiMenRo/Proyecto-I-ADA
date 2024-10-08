@@ -10,7 +10,6 @@ urlpatterns = [
     
     # sub-menus
     path('terminal/ingenua/', views.terminal_ingenua, name='terminal_ingenua'),
-    path('terminal/ingenua/respuesta/', views.terminal_ingenua_respuesta, name='terminal_ingenua_respuesta'),
     # path('terminal/dinamica/', views.terminal_dinamica, name='terminal_dinamica'),
     # path('terminal/voraz/', views.terminal_voraz, name='terminal_voraz'),
     # path('subasta/ingenua/', views.subasta_ingenua, name='subasta_ingenua'),

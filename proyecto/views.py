@@ -2,7 +2,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 
-from algoritmos.smart_terminal_ingenua import transformar_fuerza_bruta
+from algoritmos.smart_terminal_ingenua import transformar_fuerza_bruta, calcular_costo
 import time
 # Create your views here.
 
@@ -29,13 +29,15 @@ def terminal_ingenua(request):
             profundidad = int(profundidad)
         else:
             profundidad = 10  # Si no es un número válido, asigna 10 como valor por defecto
-                
-        print(profundidad)
+
         tiempo_inicial = time.time()
         resultado = transformar_fuerza_bruta(request.POST['cadena_inicial'], request.POST['cadena_objetivo'], profundidad)
+        costos = calcular_costo(resultado, int(request.POST['advance']), int(request.POST['delete']), 
+                                int(request.POST['replace']), int(request.POST['insert']), 
+                                int(request.POST['kill']))
         tiempo_final = time.time()
         print("profundiadad: ", profundidad)
-        return render(request, 'terminal_ingenua_respuesta.html', {'resultado': resultado, 'tiempo_ejecucion': tiempo_final - tiempo_inicial})
+        return render(request, 'terminal_ingenua_respuesta.html',
+                      {'resultado': resultado, 'tiempo_ejecucion': tiempo_final - tiempo_inicial,
+                       'ecuacion_costos_variables': costos[0], 'ecuacion_costos': costos[1], 'costo_total': costos[2]})
     
-def terminal_ingenua_respuesta(request):
-    return render(request, 'terminal_ingenua_respuesta.html')

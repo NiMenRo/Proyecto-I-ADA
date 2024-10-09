@@ -2,12 +2,19 @@
 
 {% block content %}
 
-<h1>Terminal Inteligente <br> Solución Ingenua/Fuerza Bruta</h1>
+<h1>Terminal Inteligente <br> {{ titulo_solucion }}</h1>
 
 
 <div class="mt-5 d-flex flex-container justify-content-center">
+    {% if condition %}
+        
+    {% elif condition2 %}
+        
+    {% else %}
+        
+    {% endif %}
   
-    <form method="POST" action="{% url 'terminal_ingenua' %}">
+    <form method="POST" action="{% if solucion == 'ingenua' %}{% url 'terminal_ingenua' %} {% else %} {% url 'terminal_voraz' %} {% endif %}">
         <h3>Ingresa la cadena inicial y la cadena objetivo</h3>
         {% csrf_token %}
         <!-- <label for="texto">Cadena Inicial</label>
@@ -26,11 +33,13 @@
                 <input class="form-control" name="cadena_objetivo" placeholder="Escriba una cadena">
             </div>
 
+            {% if solucion == 'ingenua' %}
             <div class="mb-3">
                 <label for="profundidad" class="form-label">Pofundidad/limite de busqueda</label>
                 <input class="form-control" type="number" name="profundidad" placeholder="Por defecto es de 10">
-            </div>
-
+            </div>    
+            {% endif %}
+            
             <h3>Ingreso de Costos para las operaciones</h3>
             <div class="mb-3">
                 <label for="advance" class="form-label">Advance</label>

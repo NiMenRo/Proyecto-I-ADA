@@ -57,3 +57,15 @@ def terminal_voraz(request):
         return render(request, 'terminal/terminal_voraz_respuesta.html',
                       {'cadena_inicial': request.POST['cadena_inicial'], 'cadena_objetivo': request.POST['cadena_objetivo'],'resultado': f"({resultado[2]})", 'tiempo_ejecucion': tiempo_final - tiempo_inicial,
                        'ecuacion_costos_variables': costos[0], 'ecuacion_costos': costos[1], 'costo_total': costos[2]})
+
+def terminal_dinamica(request):
+    if request.method == 'GET':
+        return terminal_datos(request, 'dinamica', 'Solución Dinámica')
+    else:
+       tiempo_inicial = time.time()
+       time.sleep(2)
+       tiempo_final = time.time()
+       resultado = ('prueba, prueba, prueba, prueba')
+       return render(request, 'terminal/terminal_dinamica_respuesta.html',
+                     {'cadena_inicial': request.POST['cadena_inicial'], 
+                      'cadena_objetivo': request.POST['cadena_objetivo'],'resultado': resultado, 'tiempo_ejecucion': tiempo_final - tiempo_inicial})

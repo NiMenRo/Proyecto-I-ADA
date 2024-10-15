@@ -1,9 +1,10 @@
 
 from django.shortcuts import render
-from django.http import HttpResponse
+
 
 from algoritmos.smart_terminal_ingenua import transformar_fuerza_bruta, calcular_costo
 from algoritmos.smart_terminal_voraz import transformar_cadena_voraz, calcular_costo_voraz
+from algoritmos.smart_terminal_dinamico import construir_solucion_optima, calcular_costo_minimo, generar_costo
 import time
 # Create your views here.
 
@@ -62,10 +63,29 @@ def terminal_dinamica(request):
     if request.method == 'GET':
         return terminal_datos(request, 'dinamica', 'Solución Dinámica')
     else:
-       tiempo_inicial = time.time()
-       time.sleep(2)
-       tiempo_final = time.time()
-       resultado = ('prueba, prueba, prueba, prueba')
-       return render(request, 'terminal/terminal_dinamica_respuesta.html',
-                     {'cadena_inicial': request.POST['cadena_inicial'], 
-                      'cadena_objetivo': request.POST['cadena_objetivo'],'resultado': resultado, 'tiempo_ejecucion': tiempo_final - tiempo_inicial})
+        # recogemos la cadena inicial (x) y la cadena objetivo (y)
+        X = request.POST['cadena_inicial']
+        Y = request.POST['cadena_objetivo']
+        # recogemos los costos de cada operacion
+        costos = {
+        'advance': int(request.POST['advance']),
+        'delete': int(request.POST['delete']),
+        'replace': int(request.POST['replace']),
+        'insert': int(request.POST['insert']),
+        'kill': int(request.POST['kill'])
+        }
+        
+        tiempo_inicial = time.time()
+        # Calcular el costo mínimo y la matriz de soluciones
+        costo_minimo, matriz = calcular_costo_minimo(X, Y, costos)
+        # Construir la secuencia de operaciones óptima
+        operaciones_optimas, movimientos = construir_solucion_optima(matriz, X, Y, costos)
+        costo_operaciones = generar_costo (movimientos)
+        tiempo_final = time.time()
+        tiempo_total = str(tiempo_final - tiempo_inicial)
+        
+        
+        return render(request, 'terminal/terminal_dinamica_respuesta.html',
+                    {'cadena_inicial': request.POST['cadena_inicial'], 
+                    'cadena_objetivo': request.POST['cadena_objetivo'],'resultado': operaciones_optimas, 'tiempo_ejecucion': tiempo_total,
+                    'costo_operaciones': costo_operaciones, 'costo_minimo': costo_minimo})

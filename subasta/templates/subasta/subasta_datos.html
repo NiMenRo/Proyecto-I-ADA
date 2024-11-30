@@ -1,0 +1,60 @@
+{% extends 'layout/base.html' %}
+
+{% block content %}
+
+<h1>El problema de la subasta Pública<br> {{ titulo_solucion }}</h1>
+
+
+<div class="mt-5 d-flex flex-container justify-content-center">
+  
+    <form method="POST" action="{% if solucion == 'ingenua' %}{% url 'terminal_ingenua' %} {% elif solucion == 'dinamica' %} {% url 'terminal_dinamica' %} {% elif solucion == 'voraz' %} {% url 'terminal_voraz' %} {% endif %}">
+        <h3>Ingresa la cadena inicial y la cadena objetivo</h3>
+        {% csrf_token %}
+        <!-- <label for="texto">Cadena Inicial</label>
+        <input type="text" name="texto" placeholder="Escriba una cadena" />
+        <label for="texto2">Cadena Objetivo</label>
+        <input type="text" name="texto2" placeholder="Escriba una cadena" />
+        <button type="submit">Iniciar</button> -->
+    
+        <div class="mb-3" style="width: 50rem; margin-right: 30px;">
+            <div class="mb-3">
+                <label for="cadena_inicial" class="form-label">Cantidad de acciones (A)</label>
+                <input class="form-control" name="cadena_inicial" placeholder="Escriba una cadena">
+            </div>
+            <div class="mb-3">
+                <label for="cadena_objetivo" class="form-label">Precio Minimo (B)</label>
+                <input class="form-control" name="cadena_objetivo" placeholder="Escriba una cadena">
+            </div>
+            
+            <h3>Ingreso de Costos para las operaciones</h3>
+            <div class="mb-3">
+                <label for="advance" class="form-label">Advance</label>
+                <input class="form-control" type="number" name="advance" placeholder="Ingrese el costo" required>
+            </div>
+            <div class="mb-3">
+                <label for="delete" class="form-label">Delete</label>
+                <input class="form-control" type="number" name="delete" placeholder="Ingrese el costo" required>
+            </div>
+            <div class="mb-3">
+                <label for="replace" class="form-label">Replace</label>
+                <input class="form-control" type="number" name="replace" placeholder="Ingrese el costo" required>
+            </div>
+            <div class="mb-3">
+                <label for="insert" class="form-label">insert</label>
+                <input class="form-control" type="number" name="insert" placeholder="Ingrese el costo" required>
+            </div>
+            <div class="mb-3">
+                <label for="kill" class="form-label">Kill</label>
+                <input class="form-control" type="number" name="kill" placeholder="Ingrese el costo" required>
+            </div>
+    
+            <button type="submit" class="btn btn-primary mb-3">Iniciar Terminal Inteligente</button>
+    
+        </div>
+        
+    </form>
+
+</div>
+
+
+{% endblock %}

@@ -2,53 +2,41 @@
 
 {% block content %}
 
-<h1>El problema de la subasta Pública<br> {{ titulo_solucion }}</h1>
+<h1>El problema de la subasta Pública<br> {{ titulo_solucion }} <br> {{ n }}</h1>
 
 
 <div class="mt-5 d-flex flex-container justify-content-center">
-  
-    <form method="POST" action="{% if solucion == 'ingenua' %}{% url 'terminal_ingenua' %} {% elif solucion == 'dinamica' %} {% url 'terminal_dinamica' %} {% elif solucion == 'voraz' %} {% url 'terminal_voraz' %} {% endif %}">
-        <h3>Ingresa la cadena inicial y la cadena objetivo</h3>
+    <form method="POST" action="{% if solucion == 'ingenua' %}{% url 'subasta_ingenua' %} {% elif solucion == 'dinamica' %} {% url 'subasta_dinamica' %} {% elif solucion == 'voraz' %} {% url 'subasta_voraz' %} {% endif %}">
+        <h3>Ingrese la cantidad de acciones y el precio mínimo</h3>
         {% csrf_token %}
-        <!-- <label for="texto">Cadena Inicial</label>
-        <input type="text" name="texto" placeholder="Escriba una cadena" />
-        <label for="texto2">Cadena Objetivo</label>
-        <input type="text" name="texto2" placeholder="Escriba una cadena" />
-        <button type="submit">Iniciar</button> -->
-    
         <div class="mb-3" style="width: 50rem; margin-right: 30px;">
             <div class="mb-3">
-                <label for="cadena_inicial" class="form-label">Cantidad de acciones (A)</label>
-                <input class="form-control" name="cadena_inicial" placeholder="Escriba una cadena">
+                <label for="cantidad_acciones" class="form-label">Cantidad de acciones (A)</label>
+                <input type="number" class="form-control" name="cantidad_acciones" placeholder="Ingrese un numero" required >
             </div>
             <div class="mb-3">
-                <label for="cadena_objetivo" class="form-label">Precio Minimo (B)</label>
-                <input class="form-control" name="cadena_objetivo" placeholder="Escriba una cadena">
+                <label for="precio_minimo" class="form-label">Precio Mínimo (B)</label>
+                <input type="number" class="form-control" name="precio_minimo" placeholder="Ingrese un numero" required>
             </div>
+
+            <input type="hidden" name="n" value="{{ n }}">
             
-            <h3>Ingreso de Costos para las operaciones</h3>
+            {% for i in rango %}
+            <h4>Datos de oferta #{{ i }}</h4>
             <div class="mb-3">
-                <label for="advance" class="form-label">Advance</label>
-                <input class="form-control" type="number" name="advance" placeholder="Ingrese el costo" required>
+                <label for="p{{ i }}" class="form-label">Precio (p{{ i }})</label>
+                <input class="form-control" type="number" name="p{{ i }}" placeholder="Ingrese el precio" required>
+
+                <label for="min{{ i }}" class="form-label">Cantidad de acciones minima de acciones (m{{ i }})</label>
+                <input class="form-control" type="number" name="min{{ i }}" placeholder="Ingrese la cantidad de acciones" required>
+
+                <label for="max{{ i }}" class="form-label">Cantidad de acciones maxima de acciones (M{{ i }})</label>
+                <input class="form-control" type="number" name="max{{ i }}" placeholder="Ingrese la cantidad de acciones" required>
             </div>
-            <div class="mb-3">
-                <label for="delete" class="form-label">Delete</label>
-                <input class="form-control" type="number" name="delete" placeholder="Ingrese el costo" required>
-            </div>
-            <div class="mb-3">
-                <label for="replace" class="form-label">Replace</label>
-                <input class="form-control" type="number" name="replace" placeholder="Ingrese el costo" required>
-            </div>
-            <div class="mb-3">
-                <label for="insert" class="form-label">insert</label>
-                <input class="form-control" type="number" name="insert" placeholder="Ingrese el costo" required>
-            </div>
-            <div class="mb-3">
-                <label for="kill" class="form-label">Kill</label>
-                <input class="form-control" type="number" name="kill" placeholder="Ingrese el costo" required>
-            </div>
-    
-            <button type="submit" class="btn btn-primary mb-3">Iniciar Terminal Inteligente</button>
+            {% endfor %}
+
+
+            <button type="submit" class="btn btn-primary mb-3">Iniciar Solución de la Subasta voraz</button>
     
         </div>
         

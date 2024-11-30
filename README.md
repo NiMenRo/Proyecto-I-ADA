@@ -61,3 +61,21 @@
 
 Al usar el script o ejecutar de forma manual, el servidor de la aplicación corre en el puerto 8000 en el siguiente link
 **<http://localhost:8000/>**
+
+## Ejecución Mediante Docker
+
+1. Tener Docker previamente instalado e iniciado
+
+2. Ejecutar el siguiente comando en la raiz del proyecto
+
+    ```bash
+    docker build -t django-app .
+    ```
+
+3. Una vez creada la imagen correr el contenedor mediante el siguiente comando
+
+    ```bash
+    docker run -p 8000:8000 django-app
+    ```
+
+4. La aplicación se ejecuta en el puerto 8000, en el siguiente link **<http://localhost:8000/>**

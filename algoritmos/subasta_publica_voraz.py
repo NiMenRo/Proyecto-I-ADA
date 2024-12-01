@@ -1,4 +1,8 @@
-
+"""
+Autor: Victor Hernandez
+Codigo: 2259520
+Titulo: Algoritmo Voraz De La Subasta
+"""
 def subasta_publica_voraz(A: int, B: int, n: int, ofertas: list) -> dict:
     
     # asigno numero de oferente a las ofertas

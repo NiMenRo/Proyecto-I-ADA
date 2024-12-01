@@ -1,3 +1,9 @@
+"""
+Autor: Victor Hernandez
+Codigo: 2259520
+Titulo: Algoritmo Ingenuo de la Terminal
+"""
+
 # solucion ingenua/fuerza bruta para el problema de la terminal inteligente
 
 from itertools import product

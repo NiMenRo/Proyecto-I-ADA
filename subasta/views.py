@@ -2,6 +2,7 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from algoritmos.subasta_publica_voraz import subasta_publica_voraz
 from algoritmos.subasta_publica_dinamico import subasta_publica_dinamico
+from algoritmos.subasta_publica_ingenua import subasta_fuerza_bruta
 import time
 
 # Create your views here.
@@ -76,4 +77,40 @@ def subasta_dinamica(request):
         print("asignacion_final\n", asignacion_final)
         # envio los datos correspondientes al template
         return render(request, 'subasta/subasta_dinamica_respuesta.html', {'vr': ingreso, 'acciones_compradas':asignacion_final, 'tiempo_ejecucion': f"{tiempo_final - tiempo_inicial:.10f}"})
+
+
+def subasta_ingenua(request):
+    if request.method == 'GET':
+        return subasta_datos(request, request.GET['algoritmo'], range(int(request.GET['n'])), 'Solución Ingenua')
+    else:
+        # Organizar las ofertas en un diccionario, como lo solicita el algoritmo
+        ofertas = []
+        for i in range(int(request.POST['n'])): # precio, minimo_acciones, maximo_acciones
+            ofertas.append({'P': int(request.POST[f'p{i}']), 'm': int(request.POST[f'min{i}']), 'M': int(request.POST[f'max{i}'])})
+            
+        print("ofertas\n", ofertas)
         
+        # extraer acciones y precio minimo
+        A = int(request.POST['cantidad_acciones'])
+        B = int(request.POST['precio_minimo'])
+        
+        # ejecuto el algoritmo
+        tiempo_inicial = time.time()
+        ingreso, asignacion, acciones_gobierno = subasta_fuerza_bruta(A, B, ofertas)
+        tiempo_final = time.time()
+        
+        print("ingreso\n", ingreso)
+        print("solucion\n", asignacion)
+        print("tiempo\n", tiempo_final - tiempo_inicial)
+        
+        # organizar acciones compradas en una lista de pares ofertante-acciones
+        asignacion_final = []
+        for i in range(len(asignacion)):
+            asignacion_final.append((i, asignacion[i]))
+        # agrego las acciones compradas al gobierno
+        if acciones_gobierno > 0:
+            asignacion_final.append(('Gobierno', acciones_gobierno))
+        
+        print("asignacion_final\n", asignacion_final)
+        # envio los datos correspondientes al template
+        return render(request, 'subasta/subasta_ingenua_respuesta.html', {'vr': ingreso, 'acciones_compradas':asignacion_final, 'tiempo_ejecucion': f"{tiempo_final - tiempo_inicial:.10f}"} )

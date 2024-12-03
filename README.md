@@ -1,6 +1,16 @@
-# Instrucciones para ejecución
+# Análisis y Diseño de algoritmos II - Proyecto I
 
-## Ejecución mediante script (crea el ambiente virtual y ejecuta de forma automática)
+## Integrantes
+
+- Víctor Hernandez - 2259520
+- Nicolas Rojas - 2259460
+- Esteban Revelo  - 2067507
+
+## Instrucciones para ejecución
+
+A continuación se presentan distintas alternativas para la ejecución del proyecto
+
+### Ejecución mediante script (crea el ambiente virtual y ejecuta de forma automática)
 
 - En Linux, ejecutar el archivo `ejecutar.sh`
 
@@ -14,7 +24,7 @@
     ejcutar.bat
     ```
 
-## Creación de un ambiente virtual para la ejecución de forma manual
+### Creación de un ambiente virtual para la ejecución de forma manual
 
 1. Instalación de virtualenv
 
@@ -57,12 +67,12 @@
     python manage.py runserver 
     ```
 
-## Ejecución de la aplicación
+### Ejecución de la aplicación
 
 Al usar el script o ejecutar de forma manual, el servidor de la aplicación corre en el puerto 8000 en el siguiente link
 **<http://localhost:8000/>**
 
-## Ejecución Mediante Docker
+### Ejecución Mediante Docker (crear un contenedor para la aplicación)
 
 1. Tener Docker previamente instalado e iniciado
 

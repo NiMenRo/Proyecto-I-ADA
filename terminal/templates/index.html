@@ -4,16 +4,13 @@
 
 <h1>Proyecto I - ADA II <br> La terminal inteligente y el problema de la subasta pública</h1>
 
-<div class="mt-3" id="list">
-    <ul class="list-group">
-        <li class="list-group-item">
-            <button type="button" class="btn btn-light">Terminal Inteligente Ingenua</button>
-        </li>
-        <li class="list-group-item">Terminal Inteligente Dinámica</li>
-        <li class="list-group-item">Terminal Inteligente Voraz</li>
-        <li class="list-group-item">Subasta Pública Ingenua</li>
-        <li class="list-group-item">Subasta Pública Dinámica</li>
-        <li class="list-group-item">Subasta Pública Voraz</li>
-    </ul>
+<div class="mt-3 d-flex align-items-center justify-content-center">
+    <p><b>Integrantes:</b> <br> Víctor Hernandez - 2259520 <br> Nicolas Rojas - 2259460 <br> Esteban Revelo - 2067507</p>
 </div>
+
+<div class="mt-3 d-flex align-items-center justify-content-center">
+    <a href="{% url 'terminal_home' %}" class="btn btn-secondary" style="margin-right: 30px">Ir al menu de la terminal inteligente</a>
+    <a href="{% url 'subasta_home' %}" class="btn btn-secondary" style="margin-right: 30px">Ir al menu del problema de la subasta pública</a>
+</div>
+
 {% endblock %}

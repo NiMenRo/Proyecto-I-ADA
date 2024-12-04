@@ -58,26 +58,24 @@ def ejecutar_operaciones(cadena, cadena_objetivo, secuencia_operaciones):
     for operacion in secuencia_operaciones:
         if operacion == 'advance':
             cadena, cursor = advance(cadena, cursor)
-            print(cadena, cursor)
+            
         elif operacion == 'delete':
             cadena, cursor = delete(cadena, cursor)
-            print(cadena, cursor)
+            
         elif operacion == 'replace': # a la hora de reemplazar verifico si el cursor esta dentro de las posiciones correctas
                                     # y reemplazo tratando de coincidir con la cadena objetivo
             if cursor < len(cadena_objetivo):
                 caracter_a_reemplazar = cadena_objetivo[cursor]
                 cadena, cursor = replace(cadena, cursor, caracter_a_reemplazar)
-                print(cadena, cursor)
+
             else:
                 return False
         elif operacion == 'insert': # aplico lo mismo que a la hora de reemplazar
             if cursor < len(cadena_objetivo):
                 caracter_a_insertar = cadena_objetivo[cursor]
                 cadena, cursor = insert(cadena, cursor, caracter_a_insertar)
-                print(cadena, cursor)
         elif operacion == 'kill':
             cadena, cursor = kill(cadena, cursor)
-            print(cadena, cursor)
     
     return cadena == cadena_objetivo # verifico si las cadenas son iguales y retorno un booleano
 

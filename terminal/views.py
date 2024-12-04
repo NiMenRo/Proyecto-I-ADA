@@ -4,7 +4,7 @@ from django.shortcuts import render
 
 from algoritmos.smart_terminal_ingenua import transformar_fuerza_bruta, calcular_costo
 from algoritmos.smart_terminal_voraz import transformar_cadena_voraz, calcular_costo_voraz
-from algoritmos.smart_terminal_dinamico import construir_solucion_optima, calcular_costo_minimo, generar_costo
+from algoritmos.smart_terminal_dinamico import calcular_matriz_costos, reconstruir_operaciones, generar_costo ,calcularmovimientos
 import time
 # Create your views here.
 
@@ -66,6 +66,9 @@ def terminal_dinamica(request):
         # recogemos la cadena inicial (x) y la cadena objetivo (y)
         X = request.POST['cadena_inicial']
         Y = request.POST['cadena_objetivo']
+        
+        print(len(X))
+        print(len(Y))
         # recogemos los costos de cada operacion
         costos = {
         'advance': int(request.POST['advance']),
@@ -77,15 +80,17 @@ def terminal_dinamica(request):
         
         tiempo_inicial = time.time()
         # Calcular el costo mínimo y la matriz de soluciones
-        costo_minimo, matriz = calcular_costo_minimo(X, Y, costos)
-        # Construir la secuencia de operaciones óptima
-        operaciones_optimas, movimientos = construir_solucion_optima(matriz, X, Y, costos)
-        costo_operaciones = generar_costo (movimientos)
+        M = calcular_matriz_costos(X, Y, costos)
+        operaciones_optimas, movimientos = reconstruir_operaciones(X, Y, M, costos)
+        costoterminos = calcularmovimientos(movimientos)
+        costoTotal = generar_costo(movimientos, costos)
+        
         tiempo_final = time.time()
         tiempo_total = str(tiempo_final - tiempo_inicial)
+        print(tiempo_total)
         
         
         return render(request, 'terminal/terminal_dinamica_respuesta.html',
                     {'cadena_inicial': request.POST['cadena_inicial'], 
                     'cadena_objetivo': request.POST['cadena_objetivo'],'resultado': operaciones_optimas, 'tiempo_ejecucion': tiempo_total,
-                    'costo_operaciones': costo_operaciones, 'costo_minimo': costo_minimo})
+                    'costo_operaciones': costoterminos, 'costo_minimo': costoTotal})
